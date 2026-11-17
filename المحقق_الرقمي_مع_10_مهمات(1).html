@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحقق الرقمي</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background: #071426;
+    color: white;
+    min-height: 100vh;
+}
+
+header {
+    background: #0b1d35;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 1px solid #183a5b;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: #42d9ff;
+}
+
+nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+nav button {
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 9px 13px;
+    cursor: pointer;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+nav button:hover,
+nav button.active {
+    background: #123d60;
+    color: #42d9ff;
+}
+
+.page {
+    display: none;
+    padding: 45px 7%;
+    min-height: 80vh;
+}
+
+.page.active {
+    display: block;
+}
+
+.hero {
+    min-height: 82vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    padding: 35px;
+    background:
+    linear-gradient(rgba(3, 15, 32, 0.55), rgba(3, 15, 32, 0.78)),
+    url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1800&q=85")
+    center/cover no-repeat;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 750px;
+}
+
+.hero h1 {
+    font-size: clamp(35px, 6vw, 62px);
+    color: white;
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #42d9ff;
+}
+
+.hero p {
+    font-size: 19px;
+    line-height: 2;
+    color: #e2efff;
+    margin-bottom: 25px;
+}
+
+.btn {
+    background: linear-gradient(135deg, #13b9e8, #2878d8);
+    color: white;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px #0ca8d655;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    color: #42d9ff;
+    margin-bottom: 30px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    background: #10253e;
+    border: 1px solid #1b4567;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #42d9ff;
+}
+
+.card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card h3 {
+    color: #42d9ff;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #c5d6e9;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.info-box {
+    background: #10253e;
+    border: 1px solid #1b4567;
+    border-radius: 18px;
+    padding: 25px;
+    max-width: 850px;
+    margin: 20px auto;
+    line-height: 2;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #28516f;
+    background: #091a2e;
+    color: white;
+    outline: none;
+    margin: 10px 0 18px;
+    font-size: 15px;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #42d9ff;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+label {
+    color: #42d9ff;
+    font-weight: 700;
+}
+
+.question-box {
+    max-width: 750px;
+    margin: auto;
+    background: #10253e;
+    padding: 30px;
+    border-radius: 18px;
+    border: 1px solid #1b4567;
+}
+
+.question-box h3 {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.answer-option {
+    display: block;
+    width: 100%;
+    background: #183653;
+    color: white;
+    border: 1px solid #28516f;
+    border-radius: 10px;
+    padding: 13px;
+    margin: 10px 0;
+    cursor: pointer;
+    text-align: right;
+    font-size: 15px;
+}
+
+.answer-option:hover:not(:disabled) {
+    background: #205276;
+}
+
+.answer-option:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.correct {
+    background: #126b49 !important;
+    border-color: #36d99a !important;
+}
+
+.wrong {
+    background: #8b303c !important;
+    border-color: #ff6878 !important;
+}
+
+.feedback {
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 10px;
+    display: none;
+    line-height: 1.8;
+}
+
+.feedback.success {
+    display: block;
+    background: #104a38;
+    color: #65f0b8;
+}
+
+.feedback.error {
+    display: block;
+    background: #51232c;
+    color: #ff9aa5;
+}
+
+.suggestion-item {
+    background: #10253e;
+    border: 1px solid #1b4567;
+    padding: 18px;
+    border-radius: 13px;
+    margin: 12px 0;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.suggestion-item small {
+    color: #42d9ff;
+}
+
+.progress {
+    color: #42d9ff;
+    margin-bottom: 18px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #0b1d35;
+    color: #9db4ce;
+    margin-top: 40px;
+}
+
+#certificate {
+    background: #f4f7fa;
+    color: #10253e;
+    text-align: center;
+    padding: 45px 20px;
+    border: 8px double #16a9d5;
+    border-radius: 15px;
+    max-width: 850px;
+    margin: auto;
+}
+
+#certificate h2 {
+    color: #087ca7;
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.certificate-score-box {
+    background: #e6f5fb;
+    border: 1px solid #8dd8ee;
+    border-radius: 12px;
+    padding: 18px;
+    max-width: 560px;
+    margin: 22px auto;
+    line-height: 2;
+    font-size: 18px;
+}
+
+#certificateScore {
+    color: #087ca7;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+#certificatePercent {
+    color: #087ca7;
+    font-weight: 700;
+}
+
+#certificateResult {
+    display: block;
+    color: #126b49;
+    margin-top: 8px;
+}
+
+@media(max-width:700px) {
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .page {
+        padding: 25px 5%;
+    }
+
+    .hero {
+        min-height: 70vh;
+    }
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #certificate,
+    #certificate * {
+        visibility: visible;
+    }
+
+    #certificate {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🔍 المحقق الرقمي</div>
+
+    <nav>
+        <button class="active" onclick="showPage('home',this)">الرئيسية</button>
+        <button onclick="showPage('missions',this)">المهمات</button>
+        <button onclick="showPage('tips',this)">النصائح</button>
+        <button onclick="showPage('certificate',this)">الشهادة</button>
+        <button onclick="showPage('suggestions',this)">الاقتراحات</button>
+        <button onclick="showPage('reviews',this)">التقييمات</button>
+        <button onclick="showPage('contact',this)">تواصل معنا</button>
+    </nav>
+</header>
+
+<!-- الصفحة الرئيسية -->
+<section id="home" class="page active">
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>مرحبًا بك في <span>المحقق الرقمي</span></h1>
+
+            <p>
+                اكتشف عالم الأمن السيبراني، واختبر معلوماتك،
+                وتعلّم كيف تحمي نفسك وبياناتك في العالم الرقمي.
+            </p>
+
+            <button class="btn" onclick="showPage('missions')">
+                ابدأ رحلتك الآن ←
+            </button>
+        </div>
+    </div>
+
+</section>
+
+<!-- المهمات -->
+<section id="missions" class="page">
+
+    <h2 class="section-title">🎯 المهمات الرقمية</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>🎣 مهمة التصيد الإلكتروني</h3>
+                <p>تعرّف على الرسائل الاحتيالية وكيفية اكتشافها.</p>
+                <button class="btn" onclick="startMission(0)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>🔐 مهمة كلمات المرور</h3>
+                <p>تعلّم طرق إنشاء كلمات مرور قوية وآمنة.</p>
+                <button class="btn" onclick="startMission(1)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>🔗 مهمة الروابط المشبوهة</h3>
+                <p>اكتشف مخاطر الروابط غير الموثوقة.</p>
+                <button class="btn" onclick="startMission(2)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>🛡️ مهمة حماية البيانات</h3>
+                <p>تعرف على أهمية حماية معلوماتك الشخصية.</p>
+                <button class="btn" onclick="startMission(3)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>🔑 مهمة تأمين الحسابات</h3>
+                <p>تعرّف على خطوات حماية حساباتك من الوصول غير المصرح به.</p>
+                <button class="btn" onclick="startMission(4)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>📰 مهمة كشف الأخبار المزيفة</h3>
+                <p>تعلّم كيف تتحقق من صحة الأخبار والمعلومات قبل نشرها.</p>
+                <button class="btn" onclick="startMission(5)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>🕵️ مهمة الخصوصية الرقمية</h3>
+                <p>اكتشف كيف تتحكم في بياناتك وإعدادات الخصوصية.</p>
+                <button class="btn" onclick="startMission(6)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>📶 مهمة شبكات الواي فاي العامة</h3>
+                <p>تعرّف على الاستخدام الآمن للشبكات العامة.</p>
+                <button class="btn" onclick="startMission(7)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>💾 مهمة النسخ الاحتياطي</h3>
+                <p>تعلّم أهمية الاحتفاظ بنسخة آمنة من ملفاتك المهمة.</p>
+                <button class="btn" onclick="startMission(8)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80">
+            <div class="card-content">
+                <h3>🔄 مهمة التحديثات الآمنة</h3>
+                <p>اعرف لماذا تساعد تحديثات البرامج في حماية أجهزتك.</p>
+                <button class="btn" onclick="startMission(9)">ابدأ المهمة</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="info-box">
+        <h3 style="color:#42d9ff">⭐ نقاطك الحالية</h3>
+        <p id="totalScore">0 نقطة</p>
+        <p id="completedText">المهمات المكتملة: 0 من 10</p>
+    </div>
+
+</section>
+
+<!-- صفحة الاختبار -->
+<section id="quiz" class="page">
+
+    <h2 class="section-title" id="missionTitle">المهمة</h2>
+
+    <div class="question-box">
+
+        <p class="progress" id="questionProgress"></p>
+
+        <h3 id="questionText"></h3>
+
+        <div id="answers"></div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <button id="nextBtn" class="btn" onclick="nextQuestion()" style="display:none">
+            السؤال التالي
+        </button>
+
+    </div>
+
+</section>
+
+<!-- صفحة النتائج -->
+<section id="result" class="page">
+
+    <div class="info-box" style="text-align:center">
+
+        <h2 class="section-title">🎉 انتهت المهمة!</h2>
+
+        <h3 id="missionResult"></h3>
+
+        <p id="missionScore" style="font-size:25px;color:#42d9ff;margin:20px"></p>
+
+        <button class="btn" onclick="showPage('missions')">العودة للمهمات</button>
+
+    </div>
+
+</section>
+
+<!-- النصائح -->
+<section id="tips" class="page">
+
+    <h2 class="section-title">💡 نصائح الأمن السيبراني</h2>
+    <p style="text-align:center;color:#c5d6e9;margin:-12px 0 28px;line-height:1.9">
+        اتبع هذه الإرشادات اليومية للمحافظة على أمان حساباتك وبياناتك.
+    </p>
+
+    <div class="cards">
+
+        <div class="card"><div class="card-content">
+            <h3>🔐 1. استخدم كلمة مرور قوية</h3>
+            <p>اختر كلمة مرور طويلة تجمع بين الحروف والأرقام والرموز، واجعل لكل حساب كلمة مختلفة.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>🔗 2. تحقق من الروابط</h3>
+            <p>افحص عنوان الموقع ومصدر الرسالة قبل فتح أي رابط، ولا تدخل بياناتك في مواقع غير موثوقة.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>📱 3. حدّث أجهزتك</h3>
+            <p>ثبّت تحديثات نظام التشغيل والتطبيقات؛ فهي تتضمن تحسينات وإصلاحات أمنية مهمة.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>🛡️ 4. احمِ معلوماتك الشخصية</h3>
+            <p>لا تنشر رقم هويتك أو عنوانك أو بياناتك الحساسة في مواقع أو محادثات غير موثوقة.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>🔑 5. فعّل التحقق بخطوتين</h3>
+            <p>أضف وسيلة تحقق ثانية لحساباتك المهمة لزيادة صعوبة دخول أي شخص غير مصرح له.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>🚫 6. لا تشارك رمز التحقق</h3>
+            <p>لا تعطِ رمز الدخول المؤقت أو رمز التحقق لأي شخص، حتى لو ادعى أنه من الدعم الفني.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>📶 7. انتبه لشبكات Wi-Fi العامة</h3>
+            <p>تجنب إدخال كلمات المرور أو المعلومات الحساسة عند استخدام شبكة عامة غير موثوقة.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>📲 8. راجع أذونات التطبيقات</h3>
+            <p>امنح التطبيقات صلاحية الوصول إلى الكاميرا والموقع والملفات عند الحاجة فقط.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>💾 9. احتفظ بنسخة احتياطية</h3>
+            <p>احفظ نسخة من ملفاتك المهمة في مكان آمن لتتمكن من استعادتها عند فقدان الجهاز أو تلفه.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>🔒 10. اقفل جهازك</h3>
+            <p>استخدم رمز قفل أو بصمة، ولا تترك جهازك مفتوحًا دون مراقبة، خصوصًا في الأماكن العامة.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>🧾 11. تحقّق من هوية المرسل</h3>
+            <p>عند استلام طلب غير معتاد للحصول على أموال أو بيانات، تواصل مع الجهة عبر وسيلة رسمية معروفة.</p>
+        </div></div>
+
+        <div class="card"><div class="card-content">
+            <h3>🚪 12. سجّل الخروج من الأجهزة المشتركة</h3>
+            <p>عند استخدام جهاز عام أو جهاز شخص آخر، سجّل الخروج من حساباتك ولا تحفظ كلمة المرور عليه.</p>
+        </div></div>
+
+    </div>
+
+</section>
+
+<!-- الشهادة -->
+<section id="certificate" class="page">
+
+    <h2 class="section-title">🏆 شهادة الإنجاز</h2>
+
+    <div id="certificate">
+
+        <h2>شهادة إنجاز</h2>
+
+        <p style="font-size:22px;margin:25px">
+            يسر تطبيق المحقق الرقمي أن يمنح هذه الشهادة
+        </p>
+
+        <input id="studentName" placeholder="اكتب اسمك هنا"
+        style="background:white;color:#10253e;text-align:center">
+
+        <h2>المحقق الرقمي</h2>
+
+        <p style="font-size:20px;margin:20px">
+            تقديرًا لإكمال مهمات التوعية بالأمن السيبراني.
+        </p>
+
+        <div class="certificate-score-box">
+            <p id="certificateScore">درجتك: 0 من 12</p>
+            <p id="certificatePercent">النسبة: 0%</p>
+            <p id="certificateMissions">المهمات المكتملة: 0 من 10</p>
+            <strong id="certificateResult">أكمِل جميع المهمات لعرض نتيجتك النهائية.</strong>
+        </div>
+
+        <p id="certificateStatus">أكمل جميع المهمات للحصول على الشهادة.</p>
+
+    </div>
+
+    <div style="text-align:center;margin-top:20px">
+        <button class="btn" onclick="printCertificate()">طباعة الشهادة</button>
+    </div>
+
+</section>
+
+<!-- الاقتراحات -->
+<section id="suggestions" class="page">
+
+    <h2 class="section-title">💬 اقتراحات المستخدمين</h2>
+
+    <div class="info-box">
+
+        <h3 style="color:#42d9ff">شاركنا اقتراحك لتطوير التطبيق</h3>
+
+        <form id="suggestionForm">
+
+            <label>اسمك (اختياري)</label>
+            <input type="text" id="suggestionName" maxlength="40"
+            placeholder="اكتب اسمك">
+
+            <label>اقتراحك</label>
+            <textarea id="suggestionText" maxlength="1000"
+            placeholder="اكتب اقتراحك هنا..." required></textarea>
+
+            <button type="submit" class="btn" id="suggestionSubmit">
+                إرسال الاقتراح
+            </button>
+
+        </form>
+
+        <p id="suggestionMessage" style="margin-top:15px"></p>
+
+    </div>
+
+    <h2 class="section-title" style="font-size:25px;margin-top:40px">
+        📋 اقتراحات المستخدمين
+    </h2>
+
+    <div id="suggestionList">
+        <p style="text-align:center;color:#a9bfd5">جاري تحميل الاقتراحات...</p>
+    </div>
+
+</section>
+
+<!-- التقييمات -->
+<section id="reviews" class="page">
+
+    <h2 class="section-title">⭐ قيّم تجربتك</h2>
+
+    <div class="info-box">
+
+        <form id="reviewForm">
+
+            <label>اسمك</label>
+            <input type="text" id="reviewName" maxlength="40"
+            placeholder="اكتب اسمك" required>
+
+            <label>تقييمك للتطبيق</label>
+            <select id="reviewRating" required
+            style="width:100%;padding:14px;background:#091a2e;color:white;border-radius:10px;margin:10px 0 18px">
+                <option value="">اختر التقييم</option>
+                <option value="5">⭐⭐⭐⭐⭐ ممتاز</option>
+                <option value="4">⭐⭐⭐⭐ جيد جدًا</option>
+                <option value="3">⭐⭐⭐ جيد</option>
+                <option value="2">⭐⭐ يحتاج تحسين</option>
+                <option value="1">⭐ ضعيف</option>
+            </select>
+
+            <label>رأيك</label>
+            <textarea id="reviewText" placeholder="اكتب رأيك هنا..." required></textarea>
+
+            <button class="btn" type="submit">إرسال التقييم</button>
+
+        </form>
+
+        <p id="reviewMessage" style="margin-top:15px"></p>
+
+    </div>
+
+    <h2 class="section-title" style="font-size:25px;margin-top:40px">آراء المستخدمين</h2>
+    <div id="reviewList">
+        <p style="text-align:center;color:#a9bfd5">جاري تحميل التقييمات...</p>
+    </div>
+
+</section>
+
+<!-- التواصل -->
+<section id="contact" class="page">
+
+    <h2 class="section-title">📩 تواصل معنا</h2>
+
+    <div class="info-box">
+
+        <p style="text-align:center">
+            نسعد باستقبال رسائلك واستفساراتك حول تطبيق المحقق الرقمي.
+        </p>
+
+        <form id="contactForm">
+
+            <label>الاسم</label>
+            <input id="contactName" required placeholder="اسمك">
+
+            <label>الرسالة</label>
+            <textarea id="contactText" required placeholder="اكتب رسالتك"></textarea>
+
+            <button class="btn">إرسال</button>
+
+        </form>
+
+        <p id="contactMessage" style="margin-top:15px;line-height:1.8"></p>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 المحقق الرقمي | جميع الحقوق محفوظة
+</footer>
+
+<!-- Firebase وربط قاعدة البيانات -->
+<script type="module">
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp,
+    query,
+    orderBy,
+    onSnapshot
+} from
+"https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+import {
+    getAuth,
+    signInAnonymously
+} from
+"https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAipjtvM7WgtT7FTwSZecMsaUNneq0w-PI",
+    authDomain: "digital-detective-2e0b7.firebaseapp.com",
+    projectId: "digital-detective-2e0b7",
+    storageBucket: "digital-detective-2e0b7.firebasestorage.app",
+    messagingSenderId: "331921826200",
+    appId: "1:331921826200:web:1217e2cdf66f162b680bed",
+    measurementId: "G-Z4ZSB63NBN"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const suggestionList = document.getElementById("suggestionList");
+const suggestionMessage = document.getElementById("suggestionMessage");
+const suggestionSubmit = document.getElementById("suggestionSubmit");
+let databaseReady = false;
+
+function showDatabaseError(message) {
+    suggestionList.innerHTML = "";
+    const p = document.createElement("p");
+    p.style.color = "#ffbd73";
+    p.textContent = message;
+    suggestionList.appendChild(p);
+}
+
+// تسجيل دخول مجهول حتى يستطيع الزائر إرسال الاقتراحات
+signInAnonymously(auth)
+.then(() => {
+    databaseReady = true;
+    console.log("Firebase connected successfully");
+    loadSuggestions();
+    loadReviews();
+})
+.catch((error) => {
+    console.error("Firebase authentication error:", error);
+    showDatabaseError("تعذر تسجيل الدخول. تأكدي من تفعيل Anonymous في Firebase Authentication.");
+});
+
+// إرسال اقتراح إلى Firestore
+ document.getElementById("suggestionForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    if (!databaseReady) {
+        suggestionMessage.style.color = "#ffbd73";
+        suggestionMessage.textContent = "قاعدة البيانات غير جاهزة. تأكدي من إعداد Firebase ثم أعيدي تحميل الصفحة.";
+        return;
+    }
+
+    const name = document.getElementById("suggestionName").value.trim().slice(0, 40);
+    const suggestion = document.getElementById("suggestionText").value.trim().slice(0, 1000);
+    if (!suggestion) return;
+
+    suggestionSubmit.disabled = true;
+    suggestionSubmit.textContent = "جارٍ الإرسال...";
+
+    try {
+        await addDoc(collection(db, "suggestions"), {
+            name: name || "مستخدم",
+            text: suggestion,
+            createdAt: serverTimestamp()
+        });
+        suggestionMessage.style.color = "#65f0b8";
+        suggestionMessage.textContent = "✅ تم إرسال اقتراحك بنجاح!";
+        this.reset();
+    } catch (error) {
+        console.error("Suggestion save error:", error);
+        suggestionMessage.style.color = "#ff9aa5";
+        suggestionMessage.textContent = "تعذر حفظ الاقتراح. تحققي من إنشاء Firestore وقواعد الأمان.";
+    } finally {
+        suggestionSubmit.disabled = false;
+        suggestionSubmit.textContent = "إرسال الاقتراح";
+    }
+});
+
+// عرض الاقتراحات مباشرة على جميع الأجهزة
+function loadSuggestions() {
+    const suggestionsQuery = query(collection(db, "suggestions"), orderBy("createdAt", "desc"));
+
+    onSnapshot(suggestionsQuery, (snapshot) => {
+        suggestionList.innerHTML = "";
+
+        if (snapshot.empty) {
+            const empty = document.createElement("p");
+            empty.style.textAlign = "center";
+            empty.style.color = "#a9bfd5";
+            empty.textContent = "لا توجد اقتراحات حتى الآن.";
+            suggestionList.appendChild(empty);
+            return;
+        }
+
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            const item = document.createElement("div");
+            item.className = "suggestion-item";
+
+            const name = document.createElement("strong");
+            name.style.color = "#42d9ff";
+            name.textContent = "👤 " + (data.name || "مستخدم");
+
+            const text = document.createElement("p");
+            text.style.marginTop = "10px";
+            text.textContent = data.text || "";
+
+            item.appendChild(name);
+            item.appendChild(text);
+            suggestionList.appendChild(item);
+        });
+    }, (error) => {
+        console.error("Suggestions loading error:", error);
+        showDatabaseError("تعذر عرض الاقتراحات. تحققي من قواعد Firestore.");
+    });
+}
+
+// حفظ التقييمات في Firestore
+ document.getElementById("reviewForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    if (!databaseReady) {
+        document.getElementById("reviewMessage").textContent = "قاعدة البيانات غير متصلة.";
+        return;
+    }
+
+    const name = document.getElementById("reviewName").value.trim().slice(0, 40);
+    const rating = Number(document.getElementById("reviewRating").value);
+    const review = document.getElementById("reviewText").value.trim().slice(0, 1000);
+
+    if (!name || !review || !Number.isInteger(rating) || rating < 1 || rating > 5) {
+        document.getElementById("reviewMessage").textContent = "يرجى كتابة الاسم والرأي واختيار تقييم من 1 إلى 5.";
+        return;
+    }
+
+    try {
+        await addDoc(collection(db, "reviews"), {
+            name,
+            rating,
+            text: review,
+            createdAt: serverTimestamp()
+        });
+        document.getElementById("reviewMessage").textContent = "✅ شكرًا لك، تم إرسال تقييمك بنجاح!";
+        this.reset();
+    } catch (error) {
+        console.error("Review save error:", error);
+        document.getElementById("reviewMessage").textContent = "تعذر إرسال التقييم. افتحي Console في المتصفح أو راجعي قواعد Firestore.";
+    }
+});
+
+// عرض التقييمات المحفوظة مباشرة للمستخدمين
+function loadReviews() {
+    const reviewList = document.getElementById("reviewList");
+    const reviewsQuery = query(collection(db, "reviews"), orderBy("createdAt", "desc"));
+
+    onSnapshot(reviewsQuery, (snapshot) => {
+        reviewList.innerHTML = "";
+
+        if (snapshot.empty) {
+            const empty = document.createElement("p");
+            empty.style.textAlign = "center";
+            empty.style.color = "#a9bfd5";
+            empty.textContent = "لا توجد تقييمات حتى الآن. كوني أول من يقيّم التطبيق!";
+            reviewList.appendChild(empty);
+            return;
+        }
+
+        snapshot.forEach((reviewDoc) => {
+            const data = reviewDoc.data();
+            const item = document.createElement("div");
+            item.className = "suggestion-item";
+
+            const name = document.createElement("strong");
+            name.style.color = "#42d9ff";
+            name.textContent = "👤 " + (data.name || "مستخدم");
+
+            const stars = document.createElement("p");
+            stars.style.color = "#ffd166";
+            stars.style.marginTop = "6px";
+            const rating = Math.max(0, Math.min(5, Number(data.rating) || 0));
+            stars.textContent = "★".repeat(rating) + "☆".repeat(5 - rating);
+
+            const reviewText = document.createElement("p");
+            reviewText.style.marginTop = "8px";
+            reviewText.textContent = data.text || "";
+
+            item.appendChild(name);
+            item.appendChild(stars);
+            item.appendChild(reviewText);
+            reviewList.appendChild(item);
+        });
+    }, (error) => {
+        console.error("Reviews loading error:", error);
+        reviewList.textContent = "تعذر تحميل التقييمات. تحققي من قواعد Firestore.";
+    });
+}
+
+// حفظ رسائل التواصل بشكل خاص في Firestore
+ document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const contactMessage = document.getElementById("contactMessage");
+    const submitButton = this.querySelector('button[type="submit"], button:not([type])');
+
+    if (!databaseReady) {
+        contactMessage.style.color = "#ffbd73";
+        contactMessage.textContent = "قاعدة البيانات غير متصلة. أعيدي تحميل الصفحة بعد التأكد من اتصال Firebase.";
+        return;
+    }
+
+    const name = document.getElementById("contactName").value.trim().slice(0, 40);
+    const message = document.getElementById("contactText").value.trim().slice(0, 1000);
+
+    if (!name || !message) {
+        contactMessage.style.color = "#ffbd73";
+        contactMessage.textContent = "يرجى كتابة الاسم والرسالة قبل الإرسال.";
+        return;
+    }
+
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "جارٍ إرسال الرسالة...";
+    }
+
+    try {
+        await addDoc(collection(db, "contacts"), {
+            name,
+            message,
+            createdAt: serverTimestamp()
+        });
+
+        contactMessage.style.color = "#65f0b8";
+        contactMessage.textContent = "✅ وصلت رسالتك بنجاح! شكرًا لتواصلك معنا.";
+        this.reset();
+    } catch (error) {
+        console.error("Contact message save error:", error);
+        contactMessage.style.color = "#ff9aa5";
+        contactMessage.textContent = "تعذر إرسال الرسالة. تأكدي من نشر قواعد Firestore الجديدة ثم حاولي مرة أخرى.";
+    } finally {
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = "إرسال";
+        }
+    }
+});
+
+</script>
+
+<script>
+
+/* ===================================
+   التنقل بين الصفحات
+=================================== */
+
+function showPage(pageId, button) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    document.querySelectorAll("nav button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* ===================================
+   أسئلة المهمات
+=================================== */
+
+const missions = [
+
+{
+    title: "🎣 مهمة التصيد الإلكتروني",
+    questions: [
+
+        {
+            q: "ما المقصود بالتصيد الإلكتروني؟",
+            o: ["محاولة خداع المستخدم للحصول على معلوماته", "تحديث الجهاز", "إنشاء كلمة مرور"],
+            a: 0
+        },
+
+        {
+            q: "ماذا تفعل عند استلام رسالة تطلب بياناتك البنكية؟",
+            o: ["أرسل البيانات", "أتجاهلها وأتحقق من المصدر", "أفتح جميع الروابط"],
+            a: 1
+        },
+
+        {
+            q: "ما العلامة التي قد تشير إلى رسالة احتيالية؟",
+            o: ["طلب معلومات شخصية بشكل عاجل", "رسالة من مصدر موثوق تم التحقق منه", "إشعار عادي من تطبيق معروف"],
+            a: 0
+        }
+
+    ]
+},
+
+{
+    title: "🔐 مهمة كلمات المرور",
+    questions: [
+
+        {
+            q: "ما مواصفات كلمة المرور القوية؟",
+            o: ["قصيرة وسهلة", "طويلة ومتنوعة الرموز", "تحتوي على الاسم فقط"],
+            a: 1
+        },
+
+        {
+            q: "هل يُفضّل استخدام كلمة المرور نفسها لكل الحسابات؟",
+            o: ["نعم", "لا"],
+            a: 1
+        },
+
+        {
+            q: "ما فائدة المصادقة متعددة العوامل؟",
+            o: ["زيادة حماية الحساب", "إبطاء الإنترنت", "حذف الحساب"],
+            a: 0
+        }
+
+    ]
+},
+
+{
+    title: "🔗 مهمة الروابط المشبوهة",
+    questions: [
+
+        {
+            q: "ماذا تفعل قبل فتح رابط غير معروف؟",
+            o: ["أفتحه مباشرة", "أتحقق من مصدره", "أرسله للجميع"],
+            a: 1
+        },
+
+        {
+            q: "ما خطر الروابط المشبوهة؟",
+            o: ["قد تقود إلى مواقع احتيالية", "تحسن سرعة الجهاز", "تزيد مساحة التخزين"],
+            a: 0
+        },
+
+        {
+            q: "إذا وصلك رابط من شخص مجهول، ماذا تفعل؟",
+            o: ["أضغط عليه", "أتحقق منه ولا أفتحه إذا كان مشبوهًا", "أدخل بياناتي"],
+            a: 1
+        }
+
+    ]
+},
+
+{
+    title: "🛡️ مهمة حماية البيانات",
+    questions: [
+
+        {
+            q: "ما المقصود بالبيانات الشخصية؟",
+            o: ["معلومات يمكن أن تحدد هوية الشخص", "الألعاب فقط", "الصور العامة فقط"],
+            a: 0
+        },
+
+        {
+            q: "كيف تحافظ على خصوصيتك؟",
+            o: ["مشاركة كلمة المرور", "عدم مشاركة معلوماتك الحساسة", "نشر جميع بياناتك"],
+            a: 1
+        },
+
+        {
+            q: "لماذا يجب تحديث البرامج؟",
+            o: ["لإصلاح الثغرات وتحسين الحماية", "لحذف الملفات دائمًا", "لتقليل الأمان"],
+            a: 0
+        }
+
+    ]
+},
+{
+    title: "🔑 مهمة تأمين الحسابات",
+    questions: [
+        { q: "ما الخطوة التي تضيف طبقة حماية إضافية للحساب؟", o: ["تفعيل المصادقة متعددة العوامل", "مشاركة كلمة المرور", "إيقاف قفل الشاشة"], a: 0 },
+        { q: "ماذا تفعل إذا وصلك تنبيه دخول لا تعرفه؟", o: ["أتجاهله دائمًا", "أراجع نشاط الحساب وأغيّر كلمة المرور عند الحاجة", "أرسل رمز التحقق للمرسل"], a: 1 },
+        { q: "أين يُفضّل حفظ رموز الاسترداد؟", o: ["في منشور عام", "في مكان آمن لا يطلع عليه الآخرون", "في رسالة جماعية"], a: 1 }
+    ]
+},
+{
+    title: "📰 مهمة كشف الأخبار المزيفة",
+    questions: [
+        { q: "ما أول خطوة للتحقق من خبر منتشر؟", o: ["إعادة نشره فورًا", "البحث عن مصدر موثوق يؤكده", "الاعتماد على عنوانه فقط"], a: 1 },
+        { q: "أي علامة تستدعي التحقق من الخبر؟", o: ["وجود مصدر واضح وتاريخ نشر", "عنوان مثير يطلب النشر العاجل دون مصدر", "تأكيد الخبر من جهات موثوقة"], a: 1 },
+        { q: "إذا لم تستطع التأكد من صحة معلومة، ماذا تفعل؟", o: ["لا أنشرها حتى أتحقق", "أنشرها مع التخمين", "أغيّر محتواها"], a: 0 }
+    ]
+},
+{
+    title: "🕵️ مهمة الخصوصية الرقمية",
+    questions: [
+        { q: "ما المقصود بإعدادات الخصوصية؟", o: ["خيارات للتحكم في من يرى معلوماتك", "طريقة لزيادة سطوع الشاشة", "إعدادات الصوت فقط"], a: 0 },
+        { q: "ما الأفضل عند نشر صورة تحتوي على معلومات شخصية؟", o: ["نشرها للجميع", "مراجعة الصورة وإزالة المعلومات الحساسة", "إضافة رقم الهاتف إليها"], a: 1 },
+        { q: "هل من الضروري مراجعة أذونات التطبيقات؟", o: ["نعم، لمنح الأذونات الضرورية فقط", "لا، كل التطبيقات تحتاج كل الأذونات", "فقط عند شراء جهاز جديد"], a: 0 }
+    ]
+},
+{
+    title: "📶 مهمة شبكات الواي فاي العامة",
+    questions: [
+        { q: "ما التصرف الأكثر أمانًا عند استخدام شبكة عامة؟", o: ["إجراء معاملات حساسة دون تحقق", "تجنب إدخال معلومات حساسة واستخدام اتصال موثوق", "مشاركة بيانات الدخول مع الآخرين"], a: 1 },
+        { q: "كيف تتأكد من اسم شبكة المكان؟", o: ["أسأل الموظف أو أتحقق من المصدر الرسمي", "أختار أي شبكة مفتوحة", "أثق بأقوى إشارة فقط"], a: 0 },
+        { q: "ماذا تفعل بعد الانتهاء من استخدام شبكة عامة؟", o: ["أترك الاتصال التلقائي دائمًا", "أفصل الاتصال وأوقف الانضمام التلقائي عند الحاجة", "أشارك الشبكة مع الجميع"], a: 1 }
+    ]
+},
+{
+    title: "💾 مهمة النسخ الاحتياطي",
+    questions: [
+        { q: "ما فائدة النسخ الاحتياطي؟", o: ["استعادة الملفات عند فقدانها", "زيادة الإعلانات", "إبطاء الجهاز"], a: 0 },
+        { q: "أين يمكن حفظ نسخة احتياطية؟", o: ["في مكان موثوق وآمن مثل خدمة سحابية موثوقة أو قرص خارجي", "في رابط مجهول", "في جهاز عام"], a: 0 },
+        { q: "لماذا يجب التأكد من نجاح النسخ الاحتياطي؟", o: ["للتأكد من إمكانية استعادة الملفات", "لإلغاء الملفات الأصلية", "لإيقاف تحديث الجهاز"], a: 0 }
+    ]
+},
+{
+    title: "🔄 مهمة التحديثات الآمنة",
+    questions: [
+        { q: "لماذا نحدّث نظام التشغيل والتطبيقات؟", o: ["لإصلاح الثغرات وتحسين الأداء والحماية", "لإزالة الحماية", "لإيقاف الإنترنت"], a: 0 },
+        { q: "من أين يُفضّل تنزيل تحديثات التطبيقات؟", o: ["من المتاجر أو المواقع الرسمية", "من روابط مجهولة", "من مرفقات غير معروفة"], a: 0 },
+        { q: "ماذا تفعل إذا ظهر تحديث منبثق من موقع غير موثوق؟", o: ["أضغط عليه فورًا", "أتجاهله وأتحقق من التحديث عبر إعدادات الجهاز الرسمية", "أدخل كلمة المرور فيه"], a: 1 }
+    ]
+}
+
+];
+
+
+/* ===================================
+   نظام الاختبارات والنتائج
+=================================== */
+
+let currentMission = 0;
+let currentQuestion = 0;
+let currentScore = 0;
+let totalScore = 0;
+let completedMissions = [];
+
+
+function startMission(index) {
+
+    currentMission = index;
+    currentQuestion = 0;
+    currentScore = 0;
+
+    showPage("quiz");
+
+    document.getElementById("missionTitle").textContent =
+    missions[index].title;
+
+    showQuestion();
+
+}
+
+
+function showQuestion() {
+
+    const question =
+    missions[currentMission].questions[currentQuestion];
+
+    document.getElementById("questionProgress").textContent =
+    "السؤال " + (currentQuestion + 1) + " من " + missions[currentMission].questions.length;
+
+    document.getElementById("questionText").textContent =
+    question.q;
+
+    const answers = document.getElementById("answers");
+
+    answers.innerHTML = "";
+
+    question.o.forEach((answer,index) => {
+
+        const button = document.createElement("button");
+
+        button.className = "answer-option";
+        button.textContent = answer;
+
+        button.onclick = () => checkAnswer(index,button);
+
+        answers.appendChild(button);
+
+    });
+
+    document.getElementById("feedback").className = "feedback";
+    document.getElementById("feedback").textContent = "";
+
+    document.getElementById("nextBtn").style.display = "none";
+
+}
+
+
+function checkAnswer(selected,button) {
+
+    const question =
+    missions[currentMission].questions[currentQuestion];
+
+    const feedback = document.getElementById("feedback");
+
+    const buttons =
+    document.querySelectorAll(".answer-option");
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (selected === question.a) {
+
+        button.classList.add("correct");
+
+        feedback.className = "feedback success";
+
+        feedback.textContent =
+        "✅ تم الحل بنجاح! إجابة صحيحة، أحسنت!";
+
+        currentScore++;
+
+    } else {
+
+        button.classList.add("wrong");
+
+        buttons[question.a].classList.add("correct");
+
+        feedback.className = "feedback error";
+
+        feedback.textContent =
+        "❌ إجابة خاطئة! الإجابة الصحيحة هي: " +
+        question.o[question.a];
+
+    }
+
+    const nextBtn = document.getElementById("nextBtn");
+
+    nextBtn.style.display = "inline-block";
+
+    nextBtn.textContent =
+    currentQuestion === missions[currentMission].questions.length - 1 ? "عرض النتيجة" : "السؤال التالي";
+
+}
+
+
+function nextQuestion() {
+
+    if (currentQuestion < missions[currentMission].questions.length - 1) {
+
+        currentQuestion++;
+
+        showQuestion();
+
+    } else {
+
+        finishMission();
+
+    }
+
+}
+
+
+function updateCertificateDisplay() {
+
+    const maximumScore = missions.length * 3;
+    const percentage = maximumScore > 0
+        ? Math.round((totalScore / maximumScore) * 100)
+        : 0;
+
+    document.getElementById("certificateScore").textContent =
+        "درجتك: " + totalScore + " من " + maximumScore;
+
+    document.getElementById("certificatePercent").textContent =
+        "النسبة: " + percentage + "%";
+
+    document.getElementById("certificateMissions").textContent =
+        "المهمات المكتملة: " + completedMissions.length + " من " + missions.length;
+
+    let level = "تحتاج إلى المزيد من التدريب";
+    if (percentage >= 90) level = "ممتاز 🌟";
+    else if (percentage >= 80) level = "جيد جدًا 👏";
+    else if (percentage >= 70) level = "جيد 👍";
+    else if (percentage >= 60) level = "مقبول";
+
+    document.getElementById("certificateResult").textContent =
+        completedMissions.length === missions.length
+            ? "التقدير: " + level
+            : "أكمِل جميع المهمات لعرض نتيجتك النهائية.";
+}
+
+
+function finishMission() {
+
+    if (!completedMissions.includes(currentMission)) {
+
+        completedMissions.push(currentMission);
+
+        totalScore += currentScore;
+
+    }
+
+    document.getElementById("missionResult").textContent =
+    "أكملت " + missions[currentMission].title;
+
+    document.getElementById("missionScore").textContent =
+    "نتيجتك: " + currentScore + " من " + missions[currentMission].questions.length;
+
+    document.getElementById("totalScore").textContent =
+    totalScore + " نقطة";
+
+    document.getElementById("completedText").textContent =
+    "المهمات المكتملة: " + completedMissions.length + " من " + missions.length;
+
+    updateCertificateDisplay();
+
+    if (completedMissions.length === missions.length) {
+
+        document.getElementById("certificateStatus").textContent =
+        "🏆 تهانينا! لقد أكملت جميع المهمات بنجاح. هذه نتيجتك النهائية في المحقق الرقمي.";
+
+    }
+
+    showPage("result");
+
+}
+
+
+/* ===================================
+   طباعة الشهادة
+=================================== */
+
+function printCertificate() {
+
+    updateCertificateDisplay();
+
+    if (completedMissions.length !== missions.length) {
+
+        alert("أكمل جميع المهمات أولًا للحصول على الشهادة.");
+
+        return;
+
+    }
+
+    const name =
+    document.getElementById("studentName").value.trim();
+
+    if (!name) {
+
+        alert("اكتب اسمك أولًا.");
+
+        return;
+
+    }
+
+    window.print();
+
+}
+
+</script>
+
+</body>
+</html>
